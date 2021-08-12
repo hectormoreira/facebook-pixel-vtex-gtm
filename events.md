@@ -47,7 +47,7 @@
   var precoFinal = parseFloat({{ productPriceTo }}).toFixed(2);
   fbq('track', 'ViewContent', {
       value: precoFinal,
-      currency: 'BRL',
+      currency: 'USD',
       content_name: '{{productName}}',
       content_ids: {{ productSkuIds }},
       content_type: 'product'

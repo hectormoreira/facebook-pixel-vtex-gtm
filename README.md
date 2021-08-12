@@ -532,7 +532,7 @@ orderPlaced Trigger --- **FB - Other** - HTML personalizado ```html
 
 ```html
 <script>
-  var precoFinal = parseFloat({{productPriceTo}}).toFixed(2);fbq('track', 'ViewContent', {value: precoFinal,	currency: 'BRL',content_name: '{{productName}}',content_ids: {{productSkuIds}},content_type: 'product'});
+  var precoFinal = parseFloat({{productPriceTo}}).toFixed(2);fbq('track', 'ViewContent', {value: precoFinal,	currency: 'USD',content_name: '{{productName}}',content_ids: {{productSkuIds}},content_type: 'product'});
 </script>
 ```
 
