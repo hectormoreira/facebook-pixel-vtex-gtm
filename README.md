@@ -6,9 +6,8 @@ Configuration Facebook pixel and events, VTEX IO with Google Tag Manager
 
 ## variables GTM
 
-click classes:
-
 ---
+**click classes**
 
 - Grupo: variables incorporadas
 - Tipo: Variable de capa de datos
