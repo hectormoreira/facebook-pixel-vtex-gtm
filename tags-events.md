@@ -1,6 +1,6 @@
 # Events
 
-## Facebook Pixel Code
+## Facebook Pixel Code VTEX IO
 
 ```html
 <!-- Facebook Pixel Code -->

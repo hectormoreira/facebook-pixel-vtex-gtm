@@ -1,13 +1,17 @@
 # facebook-pixel-vtex-gtm
 
-Configuracion de Facebook Pixel y eventos, VTEX IO con Google Tag Manager
-
-Documentación: [Setting up Google Tag Manager
-](https://developers.vtex.com/vtex-developer-docs/docs/vtex-io-documentation-setting-up-google-tag-manager)
+Configuration Facebook pixel and events, VTEX Legacy with Google Tag Manager
 
 # Variables
 
 ## variables GTM
+
+---
+**click classes**
+
+- Grupo: variables incorporadas
+- Tipo: Variable de capa de datos
+- nome da variable:gtm.elementClasses
 
 ---
 
@@ -15,21 +19,21 @@ Documentación: [Setting up Google Tag Manager
 
 - Grupo: variables definidas por usuario
 - Tipo: Variable de capa de datos
-- Nombre de variable: ecommerce.detail.products.0.name
+- Nombre de variable: productName
 
 ---
 
-**categoryName**
+**pageCategory**
 
 - Grupo: variables definidas por usuario
 - Tipo: Variable de capa de datos
-- Nombre de variable: page
+- Nombre de variable: pageCategory
 
 **productId**
 
 - Grupo: variables definidas por usuario
 - Tipo: Variable de capa de datos
-- Nombre de variable: ecommerce.detail.products.0.id
+- Nombre de variable: productId
 
 ---
 
@@ -37,7 +41,7 @@ Documentación: [Setting up Google Tag Manager
 
 - Grupo: variables definidas por usuario
 - Tipo: Variable de capa de datos
-- Nombre de variable: ecommerce.detail.products.0.price
+- Nombre de variable: productPriceTo
 
 ---
 
@@ -117,7 +121,7 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
 **ProductsCartId**
 
 - Grupo: variables definidas por usuario
-- Tipo: Javascript personalizado
+- TIpo: Javascript personalizado
 
 ```js
 function() { var arr = {{orderFormProducts}}, len = arr.length, i = -1, res =
@@ -203,144 +207,147 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
 
 ---
 
-## Triggers GTM
+## Accionadores GTM
 
 ---
 
 **addToCart**
 
-- Tipo: Evento personalizado
-- Nombre del evento: addToCart
-- disparar: Todos los eventos personalizados
+- TIpo: Clique - todos os elementos
+- disparar:
+  Click classes - Corresponde a RegEx `buy-button|buy-button-ref`
 
 ---
 
 **checkout - payment**
 
 - Tipo: Evento Personalizado
-- Nombre del evento: payment
-- disparar: Todos los eventos personalizados
+- Nome do evento: payment
+- disparar: Todos os eventos personalizados
 
 ---
 
 **checkout - profile**
 
 - Tipo: Evento Personalizado
-- Nombre del evento: profile
+- Nome do evento: profile
 - disparar:
-  Todos los eventos personalizados
+  Todos os eventos personalizados
 
 ---
 
 **checkout - shipping**
 
 - Tipo: Evento Personalizado
-- Nombre del evento: shipping
+- Nome do evento: shipping
 - disparar:
-  Todos los eventos personalizados
+  Todos os eventos personalizados
 
 ---
 
 **checkout - email**
 
 - Tipo: Evento Personalizado
-- Nombre del evento: email
+- Nome do evento: email
 - disparar:
-  Todos los eventos personalizados
+  Todos os eventos personalizados
 
 ---
 
 **orderPlaced Trigger**
 
 - Tipo: Evento Personalizado
-- Nombre del evento: orderPlaced
+- Nome do evento: orderPlaced
 - disparar:
-  Todos los eventos personalizados
+  Todos os eventos personalizados
 
 ---
 
-**VTEX - Busca**
+**pg Busca**
 
-- Tipo: Evento personalizado
-- Nombre del evento: internalSiteSearchView
+- TIpo: Exibição de página
+- disparado em: Algumas exibições de página
 - disparar:
-  Todos los eventos personalizados
+  - pageCategory corresponde a RegEx `InternalSiteSearch`
 
 ---
 
-**VTEX - Categorias**
+**pg Geral**
 
-- Tipo: Evento personalizado
-- Nombre del evento: RegEx `departmentView|categoryView` 
+- TIpo: Exibição de página
+- disparado em: Algumas exibições de página
 - disparar:
-  Todos los eventos personalizados
+  - pageCategory corresponde a RegEx `Department|Category|Home|InternalSiteSearch`
 
 ---
 
-**VTEX - PageView**
+**pg Others**
 
-- Tipo: Evento personalizado
-- Nombre del evento: pageView
+- TIpo: Evento personalizado
+- Nome do evento: otherView
 - disparar:
-  Todos los eventos personalizados
+  Todos os eventos personalizados
 
 ---
 
-**VTEX - Producto**
+**pg Produto**
 
-- Tipo: Evento personalizado
-- Nombre del evento: productDetail
+- TIpo: Exibição de página
+- disparado em: Algumas exibições de página
 - disparar:
-  Todos los eventos personalizados
+  - pageCategory corresponde a RegEx `Product`
 
 ---
 
-## tags GTM
+## tags do GTM
 
 **FB - Pixel**
 
 - HTML personalizado
 
-```html
-<!-- Facebook Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '{your-pixel-id-goes-here}');
-  fbq('track', 'PageView');
-</script>
-<noscript>
-  <img height="1" width="1" style="display:none" 
-       src="https://www.facebook.com/tr?id={your-pixel-id-goes-here}&ev=PageView&noscript=1"/>
-</noscript>
-<!-- End Facebook Pixel Code -->
-```
+  ```html
+  <!-- Facebook Pixel Code -->
+  <script>
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod
+          ? n.callMethod.apply(n, arguments)
+          : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = "2.0";
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(
+      window,
+      document,
+      "script",
+      "https://connect.facebook.net/en_US/fbevents.js"
+    );
+    fbq("init", "000000000000000000000"); // Insert your pixel ID here.
+    fbq("track", "PageView");
+  </script>
 
-- Accionamiento:
-  - VTEX - PageView
+  <noscript
+    ><img
+      height="1"
+      width="1"
+      style="display:none"
+      src="https://www.facebook.com/tr?id=000000000000000000000&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- DO NOT MODIFY -->
+  <!-- End Facebook Pixel Code -->
+  ```
 
----
-
-**FB - PageView**
-
-- HTML personalizado
-
-```html
-<script>
-  fbq("track", "PageView");
-</script>
-```
-
-- Sequencia de Tags:
-  Disparar tag antes: FB - Pixel
-- Accionamiento:
-  - VTEX - PageVIew
+- Acionamento:
+  - All Pages
 
 ---
 
@@ -356,7 +363,7 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
 
 - Sequencia de Tags:
   Disparar tag antes: FB - Pixel
-- Accionamiento:
+- Acionamento:
   - checkout - payment
 
 ---
@@ -386,7 +393,7 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
 
 - Sequencia de Tags:
   Disparar tag antes: FB - Pixel
-- Accionamiento:
+- Acionamento:
   - addToCart
   - checkout - cart
 
@@ -406,7 +413,7 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
   - Uma vez por página
 - Sequencia de Tags:
   Disparar tag antes: FB - Pixel
-- Accionamiento:
+- Acionamento:
   - checkout - profile
   - checkout - email
 
@@ -424,7 +431,7 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
 
 - Sequencia de Tags:
   Disparar tag antes: FB - Pixel
-- Accionamiento:
+- Acionamento:
   - checkout - shipping
 
 ---
@@ -433,36 +440,42 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
 
 - HTML personalizado
 
-```html
-<!-- Purchase  -->
+````html
+<!-- Facebook Conversion Code for Conclusões de compra - Loungerie -->
+‪
 <script>
-  fbq('track', 'Purchase', {
-      value: {{transactionTotal}},
-      currency: 'USD',
-      content_type: 'product',
-      content_ids: {{transactionProductsIds}},
-    	contents: {{transactionProductsItems}}
-  });
+  (function () {
+    var \_fbq = window.\_fbq || (window.\_fbq = []);
+    if (!\_fbq.loaded) {
+    var fbds = document.createElement('script');
+    fbds.async = true;
+    fbds.src = '//connect.facebook.net/en_US/fbds.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(fbds, s);
+    \_fbq.loaded = true;
+    }
+    })();
+    window.\_fbq = window.\_fbq || [];
+    window.\_fbq.push(['track', '{{transactionId}}', { 'value': '{{transactionTotal}}', 'currency': 'USD' }]);
 </script>
-<!-- End Purchase  -->
-```
-
-- Sequencia de Tags: Disparar tag antes: FB - Pixel
-- Accionamiento: - orderPlaced Trigger 
-
----
-
-**FB - Other** 
-
-- HTML personalizado
-```html
+<noscript
+  ><img
+    height="1"
+    width="1"
+    alt=""
+    style="display:none"
+    src="https://www.facebook.com/tr?ev={{transactionId}}&cd[value]={{transactionTotal}}&cd[currency]=USD&noscript=1"
+/></noscript>
+``` - Sequencia de Tags: Disparar tag antes: FB - Pixel - Acionamento: -
+orderPlaced Trigger --- **FB - Other** - HTML personalizado ```html
 <script>
   fbq("track", "Other");
 </script>
 ````
+
 - Sequencia de Tags:
   Disparar tag antes: FB - Pixel
-- Accionamiento:
+- Acionamento:
   - Pg Others
 
 ---
@@ -487,8 +500,8 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
 
 - Sequencia de Tags:
   Disparar tag antes: FB - Pixel
-- Accionamiento:
-  - VTEX - OrderPlaced
+- Acionamento:
+  - OrderPlaced Trigger
 
 ---
 
@@ -508,7 +521,7 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
 
 - Sequencia de Tags:
   Disparar tag antes: FB - Pixel
-- Accionamiento:
+- Acionamento:
   - Pg Busca
 
 ---
@@ -518,21 +531,12 @@ arr[i].sku,'quantity':arr[i].quantity,'item_price':parseFloat(arr[i].sellingPric
 - HTML personalizado
 
 ```html
-<!-- Pixel product page -->
 <script>
-  var precoFinal = parseFloat({{ productPriceTo }}).toFixed(2);
-  fbq('track', 'ViewContent', {
-      value: precoFinal,
-      currency: 'USD',
-      content_name: '{{productName}}',
-      content_ids: {{ productSkuIds }},
-      content_type: 'product'
-  });
+  var precoFinal = parseFloat({{productPriceTo}}).toFixed(2);fbq('track', 'ViewContent', {value: precoFinal,	currency: 'USD',content_name: '{{productName}}',content_ids: {{productSkuIds}},content_type: 'product'});
 </script>
-<!-- End Pixel product page -->
 ```
 
 - Sequencia de Tags:
   Disparar tag antes: FB - Pixel
-- Accionamiento:
-  - VTEX - Producto
+- Acionamento:
+  - Pg Produto
